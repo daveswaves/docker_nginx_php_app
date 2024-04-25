@@ -1,0 +1,51 @@
+# Set up PHP (8.2-fpm), Nginx (latest) and MySQL (8.0).
+
+version: '3.9'
+services:
+  # PHP-FPM Service
+  php-fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+    # Mounts the local 'app' directory to the container's Nginx root
+      - ./app:/var/www/html 
+    depends_on:
+      - mysql-db 
+
+  # NGINX Service
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    volumes:
+    # Mountlocal 'app' directory to the Nginx root
+      - ./app:/var/www/html 
+    ports:
+      - "8080:80"
+    depends_on:
+      - php-fpm  # Depends on the PHP-FPM service
+      - mysql-db  # Depends on the MySQL database service
+
+  # MySQL Database Service
+  mysql-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: test_database
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: password
+    ports:
+    # Maps port 3306 on the host to port 3306 on the MySQL container
+      - "3306:3306" 
+
+
+# This assumes that you deployed php/nginx first (see docker-compose_01.yml).
+# After running, "Ctrl+C" to stop, then "docker compose down", before running
+# docker compose up --build again.
+# "app/index.php" connects to the database.
+# http://localhost:8080 should display "PHP Connected to MySQL successfully" if everything is working.
+
+# cd to ~/docker/nginx_php_app, then run the following command to build and run your container:
+# docker compose up --build
+# https://thriveread.com/deploying-php-fpm-nginx-and-mysql-with-docker-compose/

@@ -1,0 +1,32 @@
+# Set up PHP (8.2-fpm) and Nginx (latest).
+# These are defined in the relevant Dockerfiles (./Dockerfile & ./nginx/Dockerfile).
+
+version: '3.9'
+services:
+  # PHP-FPM Service
+  php-fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+    # Mounts the local 'app' directory to the container's Nginx root
+      - ./app:/var/www/html  
+
+  # NGINX Service
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    volumes:
+    # Mountlocal 'app' directory to the Nginx root
+      - ./app:/var/www/html 
+    ports:
+      - "8080:80"
+    depends_on:
+      - php-fpm  # Depends on the PHP-FPM service
+
+
+
+# cd to ~/docker/nginx_php_app, then run the following command to build and run your container:
+# $ docker compose up --build
+# https://thriveread.com/deploying-php-fpm-nginx-and-mysql-with-docker-compose/
