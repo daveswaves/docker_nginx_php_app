@@ -30,3 +30,18 @@ NOTE:
 Ports may require editing if they conflict with existings ports on your local machine.  
 Web server runs on port 8080 and phpMyAdmin on 8081.  
 I had to change MySQL port from 3306 to 3307, due to a conflict.
+
+
+
+### Useful Docker commands
+```
+docker compose up
+docker compose up --build
+docker compose down
+
+docker ps -a         # view containers
+docker images -a     # view images
+
+docker rm [ID]       # delete containers
+docker image rm [ID] # delete images
+```
