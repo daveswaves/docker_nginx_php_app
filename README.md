@@ -25,3 +25,8 @@ The nginx/Dockerfile defines the Nginx image (nginx:latest) and copies custom ng
 to set up PHP params.
 
 Server Access: http://localhost:8080 | phpMyAdmin Access: http://localhost:8081
+
+NOTE:  
+Ports may require editing if they conflict with existings ports on your local machine.  
+Web server runs on port 8080 and phpMyAdmin on 8081.  
+I had to change MySQL port from 3306 to 3307, due to a conflict.
