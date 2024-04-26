@@ -35,7 +35,7 @@ try {
 		['Mary', 'Moe', 'mary@example.com'],
 		['Julie', 'Dooley', 'julie@example.com'],
 	];
-	
+	/*
 	$stmt = $conn->prepare("INSERT INTO `MyGuests` (`firstname`,`lastname`,`email`) VALUES (?,?,?)");
 	
 	$conn->beginTransaction();
@@ -43,7 +43,7 @@ try {
 		$stmt->execute([$rec[0], $rec[1], $rec[2]]);
 	}
 	$conn->commit();
-	
+	*/
 	
 	// $stmt = $conn->prepare("TRUNCATE TABLE MyGuests");
 	// $stmt->execute();
