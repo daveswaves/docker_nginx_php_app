@@ -21,21 +21,21 @@ try {
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
 	// sql to create table
-	$sql = "CREATE TABLE MyGuests (
+	$sql = "CREATE TABLE IF NOT EXISTS MyGuests (
 		id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 		firstname VARCHAR(30) NOT NULL,
 		lastname VARCHAR(30) NOT NULL,
 		email VARCHAR(50),
 		reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 	)";
-	// $conn->exec($sql);
+	$conn->exec($sql);
 	
 	$data = [
 		['John', 'Doe', 'john@example.com'],
 		['Mary', 'Moe', 'mary@example.com'],
 		['Julie', 'Dooley', 'julie@example.com'],
 	];
-	/*
+	
 	$stmt = $conn->prepare("INSERT INTO `MyGuests` (`firstname`,`lastname`,`email`) VALUES (?,?,?)");
 	
 	$conn->beginTransaction();
@@ -43,13 +43,13 @@ try {
 		$stmt->execute([$rec[0], $rec[1], $rec[2]]);
 	}
 	$conn->commit();
-	*/
+	
 	
 	// $stmt = $conn->prepare("TRUNCATE TABLE MyGuests");
 	// $stmt->execute();
 	
 	
-	$stmt = $conn->prepare("SELECT id, firstname, lastname FROM MyGuests");
+	$stmt = $conn->prepare("SELECT id, firstname, lastname, email FROM MyGuests");
 	$stmt->execute();
 	
 	// $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
